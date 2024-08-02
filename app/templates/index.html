@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fraud Detection</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        body {
+            overflow-y: auto;
+        }
+
+        img {
+            max-height: 400px;
+            object-fit: contain;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-100 flex items-center justify-center h-screen p-4">
+    <div class="w-full max-w-lg bg-white shadow-md rounded-lg p-6">
+        <h1 class="text-2xl font-semibold mb-4">Debit Card Fraud Detection</h1>
+        <form method="POST" class="space-y-4">
+            <div>
+                <label for="transaction_id" class="block text-gray-700">Transaction ID:</label>
+                <input type="text" id="transaction_id" name="transaction_id" required
+                    class="w-full px-3 py-2 border border-gray-300 rounded-md">
+            </div>
+            <div>
+                <label for="name" class="block text-gray-700">Name:</label>
+                <input type="text" id="name" name="name" required
+                    class="w-full px-3 py-2 border border-gray-300 rounded-md">
+            </div>
+            <div>
+                <label for="place" class="block text-gray-700">Place:</label>
+                <input type="text" id="place" name="place" required
+                    class="w-full px-3 py-2 border border-gray-300 rounded-md">
+            </div>
+            <div>
+                <label for="transaction_amount" class="block text-gray-700">Transaction Amount:</label>
+                <input type="text" id="transaction_amount" name="transaction_amount" required
+                    class="w-full px-3 py-2 border border-gray-300 rounded-md">
+            </div>
+            <div>
+                <label for="transaction_time" class="block text-gray-700">Transaction Time:</label>
+                <input type="text" id="transaction_time" name="transaction_time" required
+                    class="w-full px-3 py-2 border border-gray-300 rounded-md">
+            </div>
+            <button type="submit"
+                class="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600">Predict</button>
+        </form>
+
+        {% if knn_pred is not none %}
+        <div class="mt-6">
+            <h2 class="text-xl font-semibold mb-2">Results:</h2>
+            <div class="bg-gray-50 p-4 rounded-md shadow-sm">
+                <p class="text-gray-800"><strong>Transaction ID:</strong> {{ transaction_id }}</p>
+                <p class="text-gray-800"><strong>Name:</strong> {{ name }}</p>
+                <p class="text-gray-800"><strong>Place:</strong> {{ place }}</p>
+                <p class="text-gray-800"><strong>Transaction Amount:</strong> {{ transaction_amount }}</p>
+                <p class="text-gray-800"><strong>Transaction Time:</strong> {{ transaction_time }}</p>
+                <p class="text-gray-800"><strong>KNN Prediction:</strong> {{ knn_pred }}</p>
+                <p class="text-gray-800"><strong>Naive Bayes Prediction:</strong> {{ nb_pred }}</p>
+                <p class="text-gray-800"><strong>K-Means Prediction:</strong> {{ kmeans_pred }}</p>
+                <p class="text-gray-800"><strong>GMM Prediction:</strong> {{ gmm_pred }}</p>
+                <p class="text-gray-800"><strong>KNN Accuracy:</strong> {{ knn_accuracy }}</p>
+                <p class="text-gray-800"><strong>Naive Bayes Accuracy:</strong> {{ nb_accuracy }}</p>
+            </div>
+        </div>
+        {% endif %}
+
+        <div class="mt-6">
+            <h2 class="text-xl font-semibold mb-2">Visualizations:</h2>
+            <img src="{{ url_for('static', filename='accuracy_bar_graph.png') }}" alt="Accuracy Bar Graph"
+                class="w-full max-w-2xl">
+            <img src="{{ url_for('static', filename='3d_scatter_plot.png') }}" alt="3D Scatter Plot"
+                class="w-full max-w-2xl mt-4">
+        </div>
+    </div>
+</body>
+
+</html>
